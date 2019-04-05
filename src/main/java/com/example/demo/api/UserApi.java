@@ -1,9 +1,12 @@
 package com.example.demo.api;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +15,7 @@ import com.example.demo.annotation.UserLoginToken;
 import com.example.demo.entity.User;
 import com.example.demo.service.TokenService;
 import com.example.demo.service.UserService;
+import com.example.demo.util.TokenUtil;
 
 
 /**
@@ -27,7 +31,7 @@ public class UserApi {
     TokenService tokenService;
     //登录
     @PostMapping("/login")
-    public Object login(User user){
+    public Object login(User user,HttpServletResponse response){
         JSONObject jsonObject=new JSONObject();
         User userForBase=userService.findByUsername(user);
         
@@ -41,7 +45,11 @@ public class UserApi {
             }else {
                 String token = tokenService.getToken(userForBase);
                 jsonObject.put("token", token);
-                jsonObject.put("user", userForBase);
+                
+                Cookie cookie = new Cookie("token", token);
+                cookie.setPath("/");
+                response.addCookie(cookie);
+                
                 return jsonObject;
             }
         }
@@ -49,6 +57,9 @@ public class UserApi {
     @UserLoginToken
     @GetMapping("/getMessage")
     public String getMessage(){
+    	
+    	System.out.println(TokenUtil.getTokenUserId());
+    	
         return "你已通过验证";
     }
 }

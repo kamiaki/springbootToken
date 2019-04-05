@@ -4,8 +4,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.demo.entity.User;
 
-import org.springframework.stereotype.Service;
+import java.util.Date;
 
+import org.springframework.stereotype.Service;
 
 /**
  * @author jinbin
@@ -13,10 +14,15 @@ import org.springframework.stereotype.Service;
  */
 @Service("TokenService")
 public class TokenService {
-    public String getToken(User user) {
-        String token="";
-        token= JWT.create().withAudience(user.getId())// 将 user id 保存到 token 里面
-                .sign(Algorithm.HMAC256(user.getPassword()));// 以 password 作为 token 的密钥
-        return token;
-    }
+
+	public String getToken(User user) {
+		Date start = new Date();
+		long currentTime = System.currentTimeMillis() + 1* 60 * 1000;
+		Date end = new Date(currentTime);
+		String token = "";
+		
+		token = JWT.create().withAudience(user.getId()).withIssuedAt(start).withExpiresAt(end)
+				.sign(Algorithm.HMAC256(user.getPassword()));
+		return token;
+	}
 }
