@@ -13,19 +13,21 @@ import com.auth0.jwt.JWT;
 * @version 1.0 
 */
 public class TokenUtil {
-	
-	  public static String getTokenUserId(){
-    	 String token = getRequest().getHeader("token");// 从 http 请求头中取出 token
-    	 String userId = JWT.decode(token).getAudience().get(0);
-    	 return userId;
-	  }
-	  
-	  /**
-	     * 获取request
-	     * @return
-	     */
-	    public static HttpServletRequest getRequest(){  
-	        ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();  
-	        return requestAttributes == null ? null : requestAttributes.getRequest();  
-	    }
+
+	public static String getTokenUserId() {
+		String token = getRequest().getHeader("token");// 从 http 请求头中取出 token
+		String userId = JWT.decode(token).getAudience().get(0);
+		return userId;
+	}
+
+	/**
+	 * 获取request
+	 * 
+	 * @return
+	 */
+	public static HttpServletRequest getRequest() {
+		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		return requestAttributes == null ? null : requestAttributes.getRequest();
+	}
 }

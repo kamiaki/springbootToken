@@ -8,16 +8,19 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
-/**
- * @author jinbin
- * @date 2018-07-08 21:04
+/***
+ * token 下发
+* @Title: TokenService.java 
+* @author MRC
+* @date 2019年5月27日 下午5:40:25 
+* @version V1.0
  */
 @Service("TokenService")
 public class TokenService {
 
 	public String getToken(User user) {
 		Date start = new Date();
-		long currentTime = System.currentTimeMillis() + 1* 60 * 1000;
+		long currentTime = System.currentTimeMillis() + 60* 60 * 1000;//一小时有效时间
 		Date end = new Date(currentTime);
 		String token = "";
 		
