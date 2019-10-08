@@ -1,37 +1,13 @@
-# springbootToken
+# Springboot Token令牌验证解决方案
 
+### 博客园地址
+https://www.cnblogs.com/ChromeT/p/10932202.html
+ 
 #### 介绍
 springbootToken登录验证demo
 
-#### 软件架构
-软件架构说明
-
-
 #### 安装教程
 
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 使用说明
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 参与贡献
-
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
-
-
-#### 码云特技
-
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+1. 下载到本地，导入IDEA
+2. 复制项目中的数据库SQL文件，导入到数据库
+3. 修改 application.properties 文件配置 修改用户名和密码
