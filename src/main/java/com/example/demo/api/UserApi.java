@@ -60,6 +60,8 @@ public class UserApi {
 	 * post man 中 headers 带上token 和 token值 如eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIiwiZXhwIjoxNjMxNjMyNTE2LCJpYXQiOjE2MzE2Mjg5MTZ9.SwgZ3sRx_ahvBPq8vOT-1LHZsm_WeGZh3_rDX-gcnjI
 	 * http://localhost:8888/getMessage
 	 *
+	 * 1.在vue中，向后台发送请求，不管是get或post，url要带上userId，headers要带上token值（本地存储的token，window.localStorage[‘token’]）
+	 *
 	 */
 	@UserLoginToken
 	@GetMapping("/getMessage")
