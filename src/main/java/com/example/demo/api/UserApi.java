@@ -22,7 +22,10 @@ public class UserApi {
 	@Autowired
 	TokenService tokenService;
 
-	// 登录
+	/**
+	 * http://localhost:8888/login?password=123
+	 * 登录
+ 	 */
 	@GetMapping("/login")
 	public Object login(User user, HttpServletResponse response) {
 		JSONObject jsonObject = new JSONObject();
@@ -53,11 +56,15 @@ public class UserApi {
 	 * @author: MRC
 	 * @date 2019年5月27日 下午5:45:19
 	 * @return String 返回类型
+	 *
+	 * post man 中 headers 带上token 和 token值 如eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIiwiZXhwIjoxNjMxNjMyNTE2LCJpYXQiOjE2MzE2Mjg5MTZ9.SwgZ3sRx_ahvBPq8vOT-1LHZsm_WeGZh3_rDX-gcnjI
+	 * http://localhost:8888/getMessage
+	 *
 	 */
 	@UserLoginToken
 	@GetMapping("/getMessage")
 	public String getMessage() {
-
+		System.out.println("111111111");
 		// 取出token中带的用户id 进行操作
 		System.out.println(TokenUtil.getTokenUserId());
 
