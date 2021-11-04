@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.annotation.PassToken;
 import com.example.demo.interceptor.AuthenticationInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,8 +32,8 @@ public class UserApi {
 	TokenService tokenService;
 
 	/**
-	 * http://localhost:8888/login?password=123
 	 * 登录
+	 * 没加注解直接放行
  	 */
 	@GetMapping("/login")
 	public Object login(User user, HttpServletResponse response) {
@@ -71,15 +72,26 @@ public class UserApi {
 	@UserLoginToken
 	@GetMapping("/getMessage")
 	public String getMessage() {
-		System.out.println("111111111");
 		// 取出token中带的用户id 进行操作
+		System.out.println("取出token中带的用户id 进行操作");
 		System.out.println(TokenUtil.getTokenUserId());
-
 		return "你已通过验证";
 	}
 
+	@PassToken
+	@GetMapping("/noAnnotation")
+	public String noAnnotation() {
+		return "无注解";
+	}
+
+	@PassToken
+	@GetMapping("/passToken")
+	public String passToken() {
+		return "直接放行";
+	}
+
 	/**
-	 * 使用久token获取新token
+	 * 使用旧的没过期的token, 获取新token
 	 * @param httpServletRequest
 	 * @return
 	 */

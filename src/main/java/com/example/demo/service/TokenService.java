@@ -32,7 +32,7 @@ public class TokenService {
 
     public String getToken(User user) {
         Date start = new Date();
-        long currentTime = System.currentTimeMillis() + 60 * 60 * 1000;//一小时有效时间
+        long currentTime = System.currentTimeMillis() + 1 * 60 * 1000;// 60秒有效期
         Date end = new Date(currentTime);
         String token;
 
@@ -93,7 +93,7 @@ public class TokenService {
         }
         //创建token
         Date start = new Date();
-        long currentTime = System.currentTimeMillis() + 60 * 60 * 1000;//一小时有效时间
+        long currentTime = System.currentTimeMillis() + 1 * 60 * 1000;// 60秒 有效期
         Date end = new Date(currentTime);
         String newToken;
         //提取用户id
