@@ -1,20 +1,23 @@
 package com.example.demo.api;
 
-import com.alibaba.fastjson.JSONObject;
-import com.example.demo.annotation.UserLoginToken;
-import com.example.demo.entity.User;
-import com.example.demo.service.TokenService;
-import com.example.demo.service.UserService;
-import com.example.demo.util.TokenUtil;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.example.demo.interceptor.AuthenticationInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.example.demo.annotation.UserLoginToken;
+import com.example.demo.entity.User;
+import com.example.demo.service.TokenService;
+import com.example.demo.service.UserService;
+import com.example.demo.util.TokenUtil;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,16 +37,13 @@ public class UserApi {
 	@GetMapping("/login")
 	public Object login(User user, HttpServletResponse response) {
 		JSONObject jsonObject = new JSONObject();
-		User userForBase = new User();
-		userForBase.setId("1");
-		userForBase.setPassword("123");
-		userForBase.setUsername("mrc");
+		User byUsername = userService.findByUsername(user);
 
-		if (!userForBase.getPassword().equals(user.getPassword())) {
+		if (!byUsername.getPassword().equals(user.getPassword())) {
 			jsonObject.put("message", "登录失败,密码错误");
 			return jsonObject;
 		} else {
-			String token = tokenService.getToken(userForBase);
+			String token = tokenService.getToken(byUsername);
 			jsonObject.put("token", token);
 
 			Cookie cookie = new Cookie("token", token);
