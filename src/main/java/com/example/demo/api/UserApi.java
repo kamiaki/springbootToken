@@ -36,6 +36,7 @@ public class UserApi {
 	 * 没加注解直接放行
  	 */
 	@GetMapping("/login")
+	@CrossOrigin(allowCredentials="true",maxAge = 3600)
 	public Object login(User user, HttpServletResponse response) {
 		JSONObject jsonObject = new JSONObject();
 		User byUsername = userService.findByUsername(user);
@@ -71,6 +72,7 @@ public class UserApi {
 	 */
 	@UserLoginToken
 	@GetMapping("/getMessage")
+	@CrossOrigin(allowCredentials="true",maxAge = 3600)
 	public String getMessage() {
 		// 取出token中带的用户id 进行操作
 		System.out.println("取出token中带的用户id 进行操作");
@@ -80,12 +82,14 @@ public class UserApi {
 
 	@PassToken
 	@GetMapping("/noAnnotation")
+	@CrossOrigin(allowCredentials="true",maxAge = 3600)
 	public String noAnnotation() {
 		return "无注解";
 	}
 
 	@PassToken
 	@GetMapping("/passToken")
+	@CrossOrigin(allowCredentials="true",maxAge = 3600)
 	public String passToken() {
 		return "直接放行";
 	}
