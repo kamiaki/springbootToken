@@ -1,18 +1,23 @@
 package com.example.demo.api;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.annotation.UserLoginToken;
 import com.example.demo.entity.User;
 import com.example.demo.service.TokenService;
 import com.example.demo.service.UserService;
 import com.example.demo.util.TokenUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -71,5 +76,27 @@ public class UserApi {
 		System.out.println(TokenUtil.getTokenUserId());
 
 		return "你已通过验证";
+	}
+
+	/**
+	 * 使用久token获取新token
+	 * @param httpServletRequest
+	 * @return
+	 */
+	@UserLoginToken
+	@PostMapping("tokenDelay")
+	@CrossOrigin(allowCredentials="true",maxAge = 3600)
+	public Map<String,String> tokenDelay (HttpServletRequest httpServletRequest){
+		Map<String,String> responseMap = new HashMap<>();
+		try {
+			responseMap = tokenService.tokenDelay(httpServletRequest);
+		} catch (IOException e) {
+			responseMap.put("message","token延时异常，请重新登陆");
+			responseMap.put("code","510");
+			responseMap.put("success","false");
+			responseMap.put("token","");
+			e.printStackTrace();
+		}
+		return responseMap;
 	}
 }
